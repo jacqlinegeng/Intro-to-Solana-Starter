@@ -123,7 +123,7 @@
 }
 
 .connected-container {
-  overflow-x: hidden;
+  height: auto;
 }
 
 .connected-container input[type="text"] {
