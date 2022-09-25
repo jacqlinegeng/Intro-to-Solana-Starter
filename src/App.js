@@ -129,14 +129,34 @@ const App = () => {
     }
   }
 
+  const shortenAddress = (address) => {
+    if (!address) return "";
+    return address.substring(0, 4) + "....." + address.substring(40);
+  };
+
   const sendGif = async () => {
-    if (inputValue.length > 0) {
-      console.log("Gif link:", inputValue);
-      setGifList([...gifList, inputValue]);
-      setInputValue("");
+    if (inputValue.length === 0) {
+      console.log("No gif link given!");
+      return;
+    }
+    setInputValue("");
+    console.log("Gif link:", inputValue);
+    try {
+      const provider = getProvider();
+      const program = new Program(idl, programID, provider);
+
+      await program.rpc.addGif(inputValue, {
+        accounts: {
+          baseAccount: baseAccount.publicKey,
+          user: provider.wallet.publicKey,
+        },
+      });
+      console.log("GIF successfully sent to program", inputValue);
+
+      await getGifList();
       showGifSentToast();
-    } else {
-      console.log("Empty input. Try again.");
+    } catch (error) {
+      console.log("Error sending GIF:", error);
     }
   };
 
@@ -156,18 +176,18 @@ const App = () => {
   );
 
   const renderConnectedContainer = () => {
-    // If we hit this, it means the program account hasn't been initialized.
     if (gifList === null) {
       return (
         <div className="connected-container">
-          <button className="cta-button submit-gif-button" onClick={createGifAccount}>
+          <button
+            className="cta-button submit-gif-button"
+            onClick={createGifAccount}
+          >
             Do One-Time Initialization For GIF Program Account
           </button>
         </div>
       );
-    }
-    // Otherwise, we're good! Account exists. User can submit GIFs.
-    else {
+    } else {
       return (
         <div className="connected-container">
           <p className="connected-header">SCENE PORTAL</p>
@@ -175,7 +195,7 @@ const App = () => {
             className="cta-button disconnect-wallet-button"
             onClick={disconnectWallet}
           >
-            SIGN OUT
+            SIGN OUT {shortenAddress(walletAddress)}
           </button>
           <form
             className="form"
@@ -191,14 +211,23 @@ const App = () => {
               onChange={onInputChange}
             />
             <button type="submit" className="cta-button submit-gif-button">
-              Submit
+              SUBMIT
             </button>
           </form>
           <div className="gif-grid">
-            {/* We use index as the key instead, also, the src is now item.gifLink */}
             {gifList.map((item, index) => (
               <div className="gif-item" key={index}>
-                <img className="gif-image" src={item.gifLink}  alt ={item.gifLink}/>
+                <img className="gif-image" src={item.gifLink} alt={item.gifLink} />
+                <div className="address-tag">
+                  <img
+                    className="phantom-image"
+                    src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/sqzgmbkggvc1uwgapeuy"
+                    alt="Phantom Wallet"
+                  />
+                  <p className="address">
+                    @{shortenAddress(item.userAddress.toString())}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -206,6 +235,7 @@ const App = () => {
       );
     }
   };
+
 
   //useEFFECTS
 
