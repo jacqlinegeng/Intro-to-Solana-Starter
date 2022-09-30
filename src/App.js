@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { Program, Provider, web3 } from "@project-serum/anchor";
 import toast, { Toaster } from "react-hot-toast";
-import "./App.css";
+import "./style.css";
 import idl from "./idl.json";
 
 
@@ -16,8 +16,60 @@ const opts = {
   preflightCommitment: "processed",
 };
 
+
 const App = () => {
   //useSTATE
+  const keys = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
+
+  const timestamps = [];
+
+  timestamps.unshift(getTimestamp());
+
+  function getRandomNumber(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function getRandomKey() {
+    return keys[getRandomNumber(0, keys.length-1)]
+  }
+
+  function targetRandomKey() {
+    const key = document.getElementById(getRandomKey());
+    key.classList.add("selected");
+    let start = Date.now()
+  }
+
+  function getTimestamp() {
+    return Math.floor(Date.now() / 1000)
+  }
+
+  document.addEventListener("keyup", event => {
+    const keyPressed = String.fromCharCode(event.keyCode);
+    const keyElement = document.getElementById(keyPressed);
+    const highlightedKey = document.querySelector(".selected");
+    
+    if (keyElement !== null) {
+      keyElement.classList.add("hit")
+      keyElement.addEventListener('animationend', () => {
+        keyElement.classList.remove("hit")
+      })
+    }
+    
+    if (keyPressed === highlightedKey.innerHTML) {
+      timestamps.unshift(getTimestamp());
+      const elapsedTime = timestamps[0] - timestamps[1];
+      console.log(`Character per minute ${60/elapsedTime}`)
+      highlightedKey.classList.remove("selected");
+      targetRandomKey();
+    } 
+  })
+
+  targetRandomKey();
+  
+
+
   const [walletAddress, setWalletAddress] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [gifList, setGifList] = useState([]);
@@ -29,6 +81,7 @@ const App = () => {
   const showConnectedWalletToast = () => toast.success("You're signed in!");
   const showDisconnectedWalletToast = () => toast.success("You've signed out!");
   const showGifSentToast = () => toast.success("GIF Sent!");
+
 
   //ACTIONS
 
@@ -71,6 +124,7 @@ const App = () => {
     setWalletAddress(null);
     showDisconnectedWalletToast();
   };
+
 
   const onInputChange = (event) => {
     const { value } = event.target;
@@ -136,11 +190,11 @@ const App = () => {
 
   const sendGif = async () => {
     if (inputValue.length === 0) {
-      console.log("No gif link given!");
+      console.log("No secrets submitted!");
       return;
     }
     setInputValue("");
-    console.log("Gif link:", inputValue);
+    console.log("secret:", inputValue);
     try {
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
@@ -166,10 +220,8 @@ const App = () => {
         className="cta-button connect-wallet-button"
         onClick={connectWallet}
       >
-        SIGN IN
+        CONNECT WALLET
       </button>
-      <p className="header">Scene Portal</p>
-      <p className="sub-header">Your favorite scenes, on the blockchain</p>
       <div className="moon" />
       <div className="kiki" />
     </div>
@@ -183,7 +235,7 @@ const App = () => {
             className="cta-button submit-gif-button"
             onClick={createGifAccount}
           >
-            Do One-Time Initialization For GIF Program Account
+            ENTER SECRET PORTAL
           </button>
         </div>
       );
@@ -206,7 +258,7 @@ const App = () => {
           >
             <input
               type="text"
-              placeholder="post your favorite film/tv scene"
+              placeholder="write down your secrets here"
               value={inputValue}
               onChange={onInputChange}
             />
@@ -217,14 +269,11 @@ const App = () => {
           <div className="gif-grid">
             {gifList.map((item, index) => (
               <div className="gif-item" key={index}>
-                <img className="gif-image" src={item.gifLink} alt={item.gifLink} />
+
+                {/* <img className="gif-image" src={item.gifLink} alt={item.gifLink} /> */}
                 <div className="address-tag">
-                  <img
-                    className="phantom-image"
-                    src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/sqzgmbkggvc1uwgapeuy"
-                    alt="Phantom Wallet"
-                  />
                   <p className="address">
+                    {item.gifLink}
                     @{shortenAddress(item.userAddress.toString())}
                   </p>
                 </div>
@@ -235,6 +284,8 @@ const App = () => {
       );
     }
   };
+
+
 
 
   //useEFFECTS

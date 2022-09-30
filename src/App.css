@@ -1,6 +1,6 @@
 .App {
   height: 100vh;
-  background-color: #250352;
+  background-color: #05071b;
   overflow: auto;
   text-align: center;
 }
@@ -58,7 +58,7 @@
 }
 
 .connect-wallet-button {
-  background-color: #360477;
+  background-color: #6a9f76;
   background-size: 200% 200%;
   font-family: "Permanent Marker", cursive;
   position: relative;
@@ -86,12 +86,21 @@
 }
 
 .submit-gif-button {
-  background-color: #360477;
+  background-color: #6974d7;
   background-size: 200% 200%;
   margin-left: 10px;
-  font-family: "Permanent Marker", cursive;
+  font-family: "Bungee";
   font-size: 1rem;
+  display: flex;
+  width: 250px;
+  height: 50px;
+  margin: 0 auto;
+  padding: 0;
+  display: table-cell;
+  vertical-align: middle;
 }
+
+
 
 .gif-grid {
   display: grid;
@@ -110,7 +119,7 @@
   position: relative;
   justify-self: center;
   align-self: center;
-  background-color: #360477;
+  background-color: #047706;
   padding: 15px;
   border-radius: 15px;
 }
@@ -124,6 +133,10 @@
 
 .connected-container {
   height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 300px;
 }
 
 .connected-container input[type="text"] {
@@ -150,10 +163,10 @@
   column-gap: 8px;
   grid-column-gap: 8px;
   padding: 6px 10px 8px 10px;
-  background-color: #360477;
+  background-color: #e1d464;
   width: 150px;
   height: 20px;
-  border-radius: 34px;
+  border-radius: 15px;
   margin-left: 30px;
   margin-top: -20px;
   color: #ffffff;

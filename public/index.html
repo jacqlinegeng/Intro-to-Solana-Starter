@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <title>Secret Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" href="%PUBLIC_URL%/tweeter.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
     <meta
@@ -12,10 +15,7 @@
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Amatic+SC&family=Permanent+Marker&family=Shadows+Into+Light&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Permanent+Marker&family=Roboto+Mono:wght@100;300;400&family=Source+Sans+Pro:ital,wght@0,200;0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -30,6 +30,12 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
+  
+
+    <!-- External JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    
     <title>Scene Portal</title>
     <meta name="title" content="Scene Portal" />
     <meta
@@ -62,6 +68,8 @@
       property="twitter:image"
       content=""
     />
+    
+    
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -76,5 +84,74 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <h1 class="title">Tell me a secret</h1>
+<div class="keyboard">
+  <ul class="row row-0">
+    <li class="pinky" id="esc">ESC</li>
+    <li class="pinky" id="1">1</li>
+    <li class="ring" id="2">2</li>
+    <li class="middle" id="3">3</li>
+    <li class="pointer1st" id="4">4</li>
+    <li class="pointer2nd" id="5">5</li>
+    <li class="pointer2nd" id="6">6</li>
+    <li class="pointer1st" id="7">7</li>
+    <li class="middle" id="8">8</li>
+    <li class="ring" id="9">9</li>
+    <li class="pinky" id="10">0</li>
+    <li class="pinky" >-</li>
+    <li class="pinky" >+</li>
+    <li class="pinky" id="back">BACK</li>
+  </ul>
+  <ul class="row row-1">
+    <li class="pinky" id="tab">TAB</li>
+    <li class="pinky" id="Q">Q</li>
+    <li class="ring" id="W">W</li>
+    <li class="middle" id="E">E</li>
+    <li class="pointer1st" id="R">R</li>
+    <li class="pointer2nd" id="T">T</li>
+    <li class="pointer2nd" id="Y">Y</li>
+    <li class="pointer1st" id="U">U</li>
+    <li class="middle" id="I">I</li>
+    <li class="ring" id="O">O</li>
+    <li class="pinky" id="P">P</li>
+    <li class="pinky" >[</li>
+    <li class="pinky" >]</li>
+    <li class="pinky" >\</li>
+  </ul>
+  <ul class="row row-2">
+    <li class="pinky" id="caps">CAPS</li>
+    <li class="pinky" id="A">A</li>
+    <li class="ring" id="S">S</li>
+    <li class="middle" id="D">D</li>
+    <li class="pointer1st" id="F">F</li>
+    <li class="pointer2nd" id="G">G</li>
+    <li class="pointer2nd" id="H">H</li>
+    <li class="pointer1st" id="J">J</li>
+    <li class="middle" id="K">K</li>
+    <li class="ring" id="L">L</li>
+    <li class="pinky" >:</li>
+    <li class="pinky" >''</li>
+    <li class="pinky" id="enter">ENTER</li>
+  </ul>
+  <ul class="row row-3">
+    <li class="pinky" id="left-shift">SHIFT</li>
+    <li class="pinky" id="Z">Z</li>
+    <li class="ring" id="X">X</li>
+    <li class="middle" id="C">C</li>
+    <li class="pointer1st" id="V">V</li>
+    <li class="pointer2nd" id="B">B</li>
+    <li class="pointer2nd" id="N">N</li>
+    <li class="pointer1st" id="M">M</li>
+    <li class="middle" >,</li>
+    <li class="ring" >.</li>
+    <li class="pinky" >;</li>
+    <li class="pinky" id="right-shift">SHIFT</li>
+  </ul>
+</div>
+<h1 class="title">Your secrets are safe with me 🤫</h1>
+
+<!-- partial -->
+<script  src="./script.js"></script>
+
   </body>
 </html>
