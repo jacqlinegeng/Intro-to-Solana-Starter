@@ -3,9 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Connection, PublicKey, clusterApiUrl } from "@solana/web3.js";
 import { Program, Provider, web3 } from "@project-serum/anchor";
 import toast, { Toaster } from "react-hot-toast";
-import "./style.css";
+import "./Style.css";
 import idl from "./idl.json";
-
 
 //CONSTANTS
 const { SystemProgram, Keypair } = web3;
@@ -16,7 +15,6 @@ const opts = {
   preflightCommitment: "processed",
 };
 
-
 const App = () => {
   //useSTATE
   const keys = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
@@ -26,49 +24,47 @@ const App = () => {
   timestamps.unshift(getTimestamp());
 
   function getRandomNumber(min, max) {
-      min = Math.ceil(min);
-      max = Math.floor(max);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   function getRandomKey() {
-    return keys[getRandomNumber(0, keys.length-1)]
+    return keys[getRandomNumber(0, keys.length - 1)];
   }
 
   function targetRandomKey() {
     const key = document.getElementById(getRandomKey());
     key.classList.add("selected");
-    let start = Date.now()
+    let start = Date.now();
   }
 
   function getTimestamp() {
-    return Math.floor(Date.now() / 1000)
+    return Math.floor(Date.now() / 1000);
   }
 
-  document.addEventListener("keyup", event => {
+  document.addEventListener("keyup", (event) => {
     const keyPressed = String.fromCharCode(event.keyCode);
     const keyElement = document.getElementById(keyPressed);
     const highlightedKey = document.querySelector(".selected");
-    
+
     if (keyElement !== null) {
-      keyElement.classList.add("hit")
-      keyElement.addEventListener('animationend', () => {
-        keyElement.classList.remove("hit")
-      })
+      keyElement.classList.add("hit");
+      keyElement.addEventListener("animationend", () => {
+        keyElement.classList.remove("hit");
+      });
     }
-    
+
     if (keyPressed === highlightedKey.innerHTML) {
       timestamps.unshift(getTimestamp());
       const elapsedTime = timestamps[0] - timestamps[1];
-      console.log(`Character per minute ${60/elapsedTime}`)
+      console.log(`Character per minute ${60 / elapsedTime}`);
       highlightedKey.classList.remove("selected");
       targetRandomKey();
-    } 
-  })
+    }
+  });
 
   targetRandomKey();
-  
-
 
   const [walletAddress, setWalletAddress] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -79,9 +75,8 @@ const App = () => {
   const showPhantomToast = () =>
     toast("To sign in, download a Phantom Wallet 👻 at https://phantom.app");
   const showConnectedWalletToast = () => toast.success("You're signed in!");
-  const showDisconnectedWalletToast = () => toast.success("You've signed out!");
-  const showGifSentToast = () => toast.success("GIF Sent!");
-
+  const showDisconnectedWalletToast = () => toast.success("You've successfully signed out!");
+  const showGifSentToast = () => toast.success("Secret Received!");
 
   //ACTIONS
 
@@ -125,7 +120,6 @@ const App = () => {
     showDisconnectedWalletToast();
   };
 
-
   const onInputChange = (event) => {
     const { value } = event.target;
     setInputValue(value);
@@ -165,23 +159,25 @@ const App = () => {
     try {
       const provider = getProvider();
       const program = await getProgram();
-      
-      console.log("ping")
+
+      console.log("ping");
       await program.rpc.startStuffOff({
         accounts: {
           baseAccount: baseAccount.publicKey,
           user: provider.wallet.publicKey,
           systemProgram: SystemProgram.programId,
         },
-        signers: [baseAccount]
+        signers: [baseAccount],
       });
-      console.log("Created a new BaseAccount w/ address:", baseAccount.publicKey.toString())
+      console.log(
+        "Created a new BaseAccount w/ address:",
+        baseAccount.publicKey.toString()
+      );
       await getGifList();
-  
-    } catch(error) {
-      console.log("Error creating BaseAccount account:", error)
+    } catch (error) {
+      console.log("Error creating BaseAccount account:", error);
     }
-  }
+  };
 
   const shortenAddress = (address) => {
     if (!address) return "";
@@ -232,7 +228,7 @@ const App = () => {
       return (
         <div className="connected-container">
           <button
-            className="cta-button submit-gif-button"
+            className="cta-button enter-button"
             onClick={createGifAccount}
           >
             ENTER SECRET PORTAL
@@ -242,7 +238,6 @@ const App = () => {
     } else {
       return (
         <div className="connected-container">
-          <p className="connected-header">SCENE PORTAL</p>
           <button
             className="cta-button disconnect-wallet-button"
             onClick={disconnectWallet}
@@ -256,12 +251,43 @@ const App = () => {
               sendGif();
             }}
           >
-            <input
-              type="text"
-              placeholder="write down your secrets here"
-              value={inputValue}
-              onChange={onInputChange}
-            />
+            <div class="container" />
+            <div class="section">
+              <div class="container-input">
+                <input
+                  class="text-input"
+                  type="text"
+                  placeholder="enter your secrets here"
+                  value={inputValue}
+                  onChange={onInputChange}
+                />
+                <div class="clip-outer clip">
+                  <div class="fill1 fill"></div>
+                </div>
+                <div class="clip-inner1 clip-inner clip">
+                  <div class="fill"></div>
+                </div>
+                <div class="clip-inner2 clip-inner clip">
+                  <div class="fill"></div>
+                </div>
+                <div class="clip-inner3 clip-inner clip">
+                  <div class="fill"></div>
+                </div>
+                <div class="clip-inner4 clip-inner clip">
+                  <div class="fill"></div>
+                </div>
+                <div class="clip-inner5 clip-inner clip">
+                  <div class="fill"></div>
+                </div>
+                <div class="clip-inner6 clip-inner clip">
+                  <div class="fill"></div>
+                </div>
+                <div class="clip-inner7 clip-inner clip">
+                  <div class="fill"></div>
+                </div>
+              </div>
+            </div>
+
             <button type="submit" className="cta-button submit-gif-button">
               SUBMIT
             </button>
@@ -269,12 +295,17 @@ const App = () => {
           <div className="gif-grid">
             {gifList.map((item, index) => (
               <div className="gif-item" key={index}>
-
+                
                 {/* <img className="gif-image" src={item.gifLink} alt={item.gifLink} /> */}
+                <p className="secret">{item.gifLink}</p>
                 <div className="address-tag">
+                  <img
+                    className="phantom-image"
+                    src="https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/sqzgmbkggvc1uwgapeuy"
+                    alt="Phantom Wallet"
+                  />
                   <p className="address">
-                    {item.gifLink}
-                    @{shortenAddress(item.userAddress.toString())}
+                    @{shortenAddress(item.userAddress.toString())} 
                   </p>
                 </div>
               </div>
@@ -284,9 +315,6 @@ const App = () => {
       );
     }
   };
-
-
-
 
   //useEFFECTS
 
