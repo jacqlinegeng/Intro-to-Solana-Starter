@@ -345,13 +345,13 @@ body {
   font-size: 20px;
   height: 50px;
   outline: none !important;
-  width: 380px;
+  width: 300px;
   padding-bottom: 4px;
   padding: 0 10px;
   position: fixed;
   z-index: 1;
   top: 73px;
-  left: 780px;
+  left: 453px;
 }
 .clip {
   height: 100%;
